@@ -1,23 +1,26 @@
-import React, {  FunctionComponent } from 'react';
+import React from 'react';
 
-type Props = {
-    addState: (state: object) => void,
+interface StoredState {
+}
+
+export type GlobalStateProps = {
+    addState: (state: StoredState) => void,
     getState: () => {},
 }
 
-export default function GlobalStateHOC (Screen : FunctionComponent<Props>)  {
-    return class Component extends React.Component {
+export default function GlobalStateHOC (Screen : React.ComponentType<GlobalStateProps>)  {
+    return class Component extends React.Component<any,StoredState> {
     
         methods = {
-            addState: (state: object) => this.addState(state),
-            getState: () : object => this.getState()
+            addState: (state: StoredState) : void => this.addState(state),
+            getState: () : StoredState => this.getState()
         }
     
-        addState(value: object) : void {
+        addState(value: StoredState) : void {
             this.setState(value)
         }
     
-        getState() : object {
+        getState() : StoredState {
             return this.state;
         }
     

@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,10 +25,15 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import GlobalStateHOC, {GlobalStateProps} from './src/components/GlobalState';
 
 declare const global: {HermesInternal: null | {}};
 
-const App = () => {
+const App = ({addState,getState} :  GlobalStateProps) => {
+  useEffect(() => {
+    addState({teste: null})
+    console.error(getState())
+  })
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -115,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default GlobalStateHOC(App);
